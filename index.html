@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melvin IA</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background: #1a1a1a;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#chat {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.msg {
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.user {
+  background: #2b6fff;
+  margin-left: auto;
+  text-align: right;
+}
+
+.bot {
+  background: #2a2a2a;
+}
+
+#inputArea {
+  display: flex;
+  padding: 10px;
+  background: #1a1a1a;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  margin-left: 10px;
+  padding: 10px;
+  border: none;
+  background: #2b6fff;
+  color: white;
+  border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🤖 Melvin IA</header>
+
+<div id="chat"></div>
+
+<div id="inputArea">
+<input id="text" placeholder="Digite sua mensagem...">
+<button onclick="send()">Enviar</button>
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+
+function addMsg(text, cls) {
+  const div = document.createElement("div");
+  div.className = "msg " + cls;
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function botReply(msg) {
+  msg = msg.toLowerCase();
+
+  const respostas = {
+
+    oi: [
+      "Oi! 😄",
+      "Eae! Tudo bem?",
+      "Olá! Como posso te ajudar?",
+      "Salve! 🤖",
+      "Oi! Bora conversar?"
+    ],
+
+    tudo: [
+      "Tudo ótimo por aqui 😎",
+      "Sim, funcionando perfeitamente!",
+      "Tudo certo! E contigo?",
+      "Estou bem! 🤖"
+    ],
+
+    futebol: [
+      "Futebol é incrível ⚽",
+      "Qual seu time favorito?",
+      "Brasileirão é bem disputado 🔥",
+      "Champions League é insana!",
+      "Você joga futebol?"
+    ],
+
+    brasil: [
+      "Brasil é gigante 🇧🇷",
+      "Muita cultura e futebol aqui!",
+      "País muito diverso 🌎",
+      "O Brasil é cheio de talentos!"
+    ],
+
+    dinheiro: [
+      "Dinheiro exige disciplina 💰",
+      "Economia é importante 📊",
+      "Você investe ou só gasta? 😅",
+      "Guardar dinheiro é essencial"
+    ],
+
+    jogos: [
+      "Jogos são muito divertidos 🎮",
+      "Qual seu jogo favorito?",
+      "Você joga no celular ou console?",
+      "Gamer detectado 😎"
+    ],
+
+    tecnologia: [
+      "Tecnologia evolui rápido 💻",
+      "IA está crescendo muito 🤖",
+      "Você gosta de tecnologia?",
+      "O futuro é digital 🌍"
+    ],
+
+    nome: [
+      "Meu nome é Melvin IA 🤖",
+      "Fui criada para conversar com você!",
+      "Sou a Melvin IA 😎"
+    ],
+
+    ajuda: [
+      "Posso falar sobre futebol, tecnologia, países, jogos e mais!",
+      "Me pergunte qualquer coisa 😄",
+      "Estou aqui para conversar com você 🤖"
+    ],
+
+    default: [
+      "Desculpe, não entendi sua mensagem 🤔",
+      "Pode reformular?",
+      "Ainda estou aprendendo 😅",
+      "Não consegui compreender isso"
+    ]
+  };
+
+  for (let key in respostas) {
+    if (msg.includes(key)) {
+      return respostas[key][Math.floor(Math.random() * respostas[key].length)];
+    }
+  }
+
+  return respostas.default[Math.floor(Math.random() * respostas.default.length)];
+}
+
+function send() {
+  let input = document.getElementById("text");
+  let text = input.value;
+  if (!text) return;
+
+  addMsg(text, "user");
+  input.value = "";
+
+  addMsg("digitando...", "bot");
+
+  setTimeout(() => {
+    document.querySelectorAll(".bot").forEach(e => {
+      if (e.innerText === "digitando...") e.remove();
+    });
+
+    addMsg(botReply(text), "bot");
+  }, 700);
+}
+
+addMsg("Olá! Eu sou a Melvin IA 🤖 Como posso ajudar?", "bot");
+</script>
+
+</body>
+  </html>
